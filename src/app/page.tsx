@@ -5,7 +5,7 @@ import ProjectsSection from "@/components/ProjectsSection";
 import SkillsSection from "@/components/SkillsSection";
 import ContactSection from "@/components/ContactSection";
 import CustomCursor from "@/components/CustomCursor";
-import GlitchSection from "@/components/GlitchSection";
+import FadeSection from "@/components/FadeSection";
 
 export default function Home() {
   return (
@@ -13,26 +13,26 @@ export default function Home() {
       <CustomCursor />
       <Navbar />
       <main>
-        {/* Hero is always visible — no glitch on initial load */}
-        <GlitchSection initialVisible>
+        {/* Hero is always visible on load */}
+        <FadeSection initialVisible>
           <HeroSection />
-        </GlitchSection>
+        </FadeSection>
 
-        <GlitchSection delay={0}>
+        <FadeSection>
           <ExperienceSection />
-        </GlitchSection>
+        </FadeSection>
 
-        <GlitchSection delay={0}>
+        <FadeSection>
           <ProjectsSection />
-        </GlitchSection>
+        </FadeSection>
 
-        <GlitchSection delay={0}>
+        <FadeSection>
           <SkillsSection />
-        </GlitchSection>
+        </FadeSection>
 
-        <GlitchSection delay={0}>
+        <FadeSection>
           <ContactSection />
-        </GlitchSection>
+        </FadeSection>
       </main>
     </>
   );

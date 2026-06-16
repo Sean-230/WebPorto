@@ -21,17 +21,28 @@ export default function HeroSection() {
       id="about"
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-animated grid-pattern"
     >
-      {/* Animated background blobs */}
+      {/* Techy Cyberpunk Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl animate-pulse" />
-        <div
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-400/8 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "1s" }}
+        {/* Core deep blue base glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/20 rounded-full blur-[100px]" />
+        
+        {/* Neon Cyan top right accent */}
+        <div 
+          className="absolute -top-20 -right-20 w-[500px] h-[500px] bg-cyan-500/15 rounded-full blur-[80px] animate-pulse" 
+          style={{ animationDuration: '4s' }}
         />
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-900/5 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "2s" }}
+        
+        {/* Electric Blue bottom left accent */}
+        <div 
+          className="absolute -bottom-32 -left-32 w-[600px] h-[600px] bg-blue-600/15 rounded-full blur-[100px] animate-pulse"
+          style={{ animationDuration: '5s', animationDelay: '1s' }}
         />
+
+        {/* Tech Grid Overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(37,99,235,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(37,99,235,0.05)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_20%,transparent_100%)]" />
+
+        {/* Scanlines Overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.25)_50%)] bg-[size:100%_4px] pointer-events-none opacity-50 mix-blend-overlay" />
       </div>
 
       <div
