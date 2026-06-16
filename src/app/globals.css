@@ -382,34 +382,26 @@ body {
 
 /* ===== GLITCH SECTION TRANSITIONS ===== */
 
-.glitch-section {
-  position: relative;
-  will-change: transform, opacity, clip-path, filter;
+.glitch-wrap {
+  will-change: transform, opacity, filter, clip-path;
 }
 
-.glitch-section--hidden {
+.glitch-wrap--hidden {
   opacity: 0;
-  clip-path: inset(50% 0 50% 0);
   pointer-events: none;
-  user-select: none;
 }
 
-.glitch-section--entering {
+.glitch-wrap--visible {
   animation: gs-glitch-in 0.65s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  pointer-events: none;
 }
 
-.glitch-section--visible {
-  opacity: 1;
-  clip-path: inset(0% 0 0% 0);
-  transform: none;
-  filter: none;
-}
-
-.glitch-section--exiting {
+.glitch-wrap--exited {
   animation: gs-glitch-out 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   pointer-events: none;
-  user-select: none;
+}
+
+.glitch-wrap--initial {
+  opacity: 1;
 }
 
 @keyframes gs-glitch-in {
@@ -437,5 +429,5 @@ body {
   45%  { clip-path: inset(85% -20px 5% -20px); transform: translate(25px, 0) skewX(-10deg); filter: contrast(200%); opacity: 0.4; }
   60%  { clip-path: inset(20% -20px 60% -20px); transform: translate(-10px, -10px); opacity: 0.2; }
   75%  { clip-path: inset(50% 0 50% 0); transform: translate(5px, 5px) scale(0.95); opacity: 0.05; }
-  100% { opacity: 0; clip-path: inset(50% 0 50% 0); transform: translate(0) scale(0.9); filter: none; }
+  100% { opacity: 0; clip-path: inset(50% 0 50% 0); transform: translate(0) scale(0.9); filter: none; pointer-events: none; }
 }

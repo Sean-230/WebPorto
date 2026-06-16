@@ -1,40 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
-
-type Phase = "hidden" | "entering" | "visible" | "exiting";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
   children: React.ReactNode;
   className?: string;
-  /** Delay before the glitch-in starts (ms) */
-  delay?: number;
-  /** The section starts visible (hero only) */
+  delay?: number; // Not heavily used in this rewrite, but kept for signature
   initialVisible?: boolean;
 }
 
 export default function GlitchSection({
   children,
   className = "",
-  delay = 0,
   initialVisible = false,
 }: Props) {
-  const [phase, setPhase] = useState<Phase>(initialVisible ? "visible" : "hidden");
+  const [isVisible, setIsVisible] = useState(initialVisible);
+  const [hasRendered, setHasRendered] = useState(initialVisible);
   const wrapRef = useRef<HTMLDivElement>(null);
-  const hasEnteredOnce = useRef(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const startEnter = useCallback(() => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      setPhase("entering");
-    }, delay);
-  }, [delay]);
-
-  const startExit = useCallback(() => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    setPhase("exiting");
-  }, []);
 
   useEffect(() => {
     if (initialVisible) return;
@@ -44,37 +26,36 @@ export default function GlitchSection({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          hasEnteredOnce.current = true;
-          startEnter();
-        } else if (hasEnteredOnce.current) {
-          startExit();
+          setIsVisible(true);
+          setHasRendered(true);
+        } else {
+          // If it has already rendered once, we can hide it when it scrolls out
+          if (wrapRef.current && hasRendered) {
+             setIsVisible(false);
+          }
         }
       },
-      // Use threshold 0 so even very tall sections trigger immediately
-      // when they enter the viewport minus 10% margin on top and bottom.
+      // Trigger when any part of it is within the 10% bounds of the screen
       { threshold: 0, rootMargin: "-10% 0px -10% 0px" }
     );
 
     observer.observe(el);
-    return () => {
-      observer.disconnect();
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, [initialVisible, startEnter, startExit]);
+    return () => observer.disconnect();
+  }, [initialVisible, hasRendered]);
 
-  const handleAnimationEnd = (e: React.AnimationEvent<HTMLDivElement>) => {
-    // Only react to our own animations (not children)
-    if (e.target !== wrapRef.current) return;
-    if (phase === "entering") setPhase("visible");
-    if (phase === "exiting") setPhase("hidden");
-  };
+  let phaseClass = "";
+  if (initialVisible) {
+    phaseClass = "glitch-wrap--initial";
+  } else if (!hasRendered) {
+    phaseClass = "glitch-wrap--hidden";
+  } else if (isVisible) {
+    phaseClass = "glitch-wrap--visible";
+  } else {
+    phaseClass = "glitch-wrap--exited";
+  }
 
   return (
-    <div
-      ref={wrapRef}
-      onAnimationEnd={handleAnimationEnd}
-      className={`glitch-section glitch-section--${phase} ${className}`}
-    >
+    <div ref={wrapRef} className={`glitch-wrap ${phaseClass} ${className}`}>
       {children}
     </div>
   );
