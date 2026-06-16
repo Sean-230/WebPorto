@@ -85,21 +85,7 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Education card — floating bottom right */}
-      <div className="absolute bottom-10 right-8 hidden xl:block">
-        <div className="glass-card p-4 max-w-xs float-anim">
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-lg bg-blue-700/30 flex items-center justify-center flex-shrink-0">
-              <span style={{ color: "#60a5fa", fontWeight: 700, fontSize: "0.75rem" }}>UC</span>
-            </div>
-            <div>
-              <p className="text-slate-200 font-semibold text-sm">Universitas Ciputra</p>
-              <p className="text-blue-400 text-xs mt-0.5">Informatics · Full Stack Dev</p>
-              <p className="text-slate-500 text-xs mt-1">GPA: 3.41 / 4.00 · 2024–2028</p>
-            </div>
-          </div>
-        </div>
-      </div>
+
     </section>
   );
 }
